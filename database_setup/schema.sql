@@ -70,15 +70,18 @@ CREATE TABLE dim_customers (
 SELECT *
 FROM dim_customers;
 
--- =============================================
+-- ================================================
 -- Create Product Dimension
--- =============================================
+-- ================================================
 
 CREATE TABLE dim_product (
+
     product_key SERIAL PRIMARY KEY,
-    stock_code VARCHAR(50) NOT NULL,
-    description VARCHAR(255),
-    unit_price NUMERIC(10,2) NOT NULL
+
+    stock_code VARCHAR(20) NOT NULL,
+
+    description TEXT
+
 );
 
 -- ================================================
@@ -123,25 +126,22 @@ CREATE TABLE fact_sales (
 
     quantity INT NOT NULL,
 
+    unit_price NUMERIC(10,2) NOT NULL,
+
     revenue NUMERIC(12,2) NOT NULL,
 
--- Customer Relationship
+    CONSTRAINT fk_customer
+        FOREIGN KEY (customer_key)
+        REFERENCES dim_customers(customer_key),
 
-CONSTRAINT fk_customer
-FOREIGN KEY (customer_key)
-REFERENCES dim_customers(customer_key),
+    CONSTRAINT fk_product
+        FOREIGN KEY (product_key)
+        REFERENCES dim_product(product_key),
 
--- Product Relationship
+    CONSTRAINT fk_date
+        FOREIGN KEY (date_key)
+        REFERENCES dim_date(date_key)
 
-CONSTRAINT fk_product
-FOREIGN KEY (product_key)
-REFERENCES dim_product(product_key),
-
--- Date Relationship
-
-CONSTRAINT fk_date
-FOREIGN KEY (date_key)
-REFERENCES dim_date(date_key)
 );
 
 /*

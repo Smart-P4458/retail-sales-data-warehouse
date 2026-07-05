@@ -21,3 +21,40 @@ Load Order
 
 ============================================================
 */
+
+INSERT INTO dim_customers (
+    customer_id,
+    country
+)
+SELECT DISTINCT
+    customer_id,
+    country
+FROM staging_retail
+WHERE customer_id IS NOT NULL;
+
+-- dim_products table
+INSERT INTO dim_product (
+    stock_code,
+    description
+)
+SELECT
+    stock_code,
+    MAX(description) AS description
+FROM staging_retail
+GROUP BY stock_code;
+
+--- dim_date table
+INSERT INTO dim_date (
+    invoice_date,
+    year,
+    month,
+    day,
+    quarter
+)
+SELECT DISTINCT
+    invoice_date,
+    EXTRACT(YEAR FROM invoice_date)::INT,
+    EXTRACT(MONTH FROM invoice_date)::INT,
+    EXTRACT(DAY FROM invoice_date)::INT,
+    EXTRACT(QUARTER FROM invoice_date)::INT
+FROM staging_retail;
