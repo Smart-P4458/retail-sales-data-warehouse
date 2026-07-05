@@ -105,3 +105,84 @@ FROM dim_product;
 SELECT *
 FROM dim_date;
 
+-- ================================================
+-- Create Fact Sales Table
+-- ================================================
+
+CREATE TABLE fact_sales (
+
+    sales_key SERIAL PRIMARY KEY,
+
+    invoice_no VARCHAR(20) NOT NULL,
+
+    customer_key INT NOT NULL,
+
+    product_key INT NOT NULL,
+
+    date_key INT NOT NULL,
+
+    quantity INT NOT NULL,
+
+    revenue NUMERIC(12,2) NOT NULL,
+
+-- Customer Relationship
+
+CONSTRAINT fk_customer
+FOREIGN KEY (customer_key)
+REFERENCES dim_customers(customer_key),
+
+-- Product Relationship
+
+CONSTRAINT fk_product
+FOREIGN KEY (product_key)
+REFERENCES dim_product(product_key),
+
+-- Date Relationship
+
+CONSTRAINT fk_date
+FOREIGN KEY (date_key)
+REFERENCES dim_date(date_key)
+);
+
+/*
+========================================================
+
+KNOWLEDGE BLOCK #05
+
+TOPIC:
+Foreign Keys
+
+Definition:
+A Foreign Key creates a relationship between
+tables.
+
+Real-world example:
+
+Every Sale
+↓
+
+must belong to
+
+↓
+
+an existing Customer
+
+Benefits
+
+✓ Prevents invalid data
+
+✓ Maintains referential integrity
+
+✓ Makes JOIN operations reliable
+
+Interview Tip
+
+"Foreign Keys enforce relationships
+between tables and help maintain
+data integrity."
+
+========================================================
+*/
+
+
+
