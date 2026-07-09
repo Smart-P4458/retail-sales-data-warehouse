@@ -66,3 +66,20 @@ This project follows a milestone-based development approach.
 
 - Common Table Expressions (CTEs)
 - Customer-focused business analysis
+
+## [Milestone 7.4]
+
+### Added
+
+- Monthly revenue analysis
+- Quarterly revenue analysis
+- Month-over-month growth
+- Running total revenue
+- Ranking functions
+- LAG() analysis
+
+### Learning
+
+- Time Series Analysis
+- Window Functions
+- Running Totals
